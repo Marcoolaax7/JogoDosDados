@@ -20,6 +20,8 @@ class Program
         {
 
             int posicaoJogador = 0;
+            int posicaoComputador = 0;
+
             bool jogoEstaEmAndamento = true;
 
             while (jogoEstaEmAndamento)
@@ -28,6 +30,9 @@ class Program
                 Console.WriteLine("----------------------------------");
                 Console.WriteLine("Jogo dos Dados");
                 Console.WriteLine("----------------------------------");
+                Console.WriteLine("----------------------------------");
+                Console.WriteLine("Rodada do Jogador!");
+                Console.WriteLine("----------------------------------");
 
 
                 // logica do jogo
@@ -35,14 +40,14 @@ class Program
                 Console.ReadLine();
 
 
-                int resultado = RandomNumberGenerator.GetInt32(1, 7);
+                int resultadoJogador = RandomNumberGenerator.GetInt32(1, 7);
 
 
                 Console.WriteLine("----------------------------------");
-                Console.WriteLine($"O numero sorteado foi: {resultado}");
-                Console.WriteLine("----------------------------------");
+                Console.WriteLine($"O numero sorteado foi: {resultadoJogador}");
+                
 
-                posicaoJogador += resultado;
+                posicaoJogador += resultadoJogador;
 
                 Console.WriteLine($"Voce esta na posicao: {posicaoJogador} de {limiteLinhaChegada}");
 
@@ -66,17 +71,72 @@ class Program
 
 
 
-              if( posicaoJogador >= limiteLinhaChegada)
+                if (posicaoJogador >= limiteLinhaChegada)
                 {
                     Console.WriteLine("\nParabens! Voce alcançou a linha de chegada.");
 
                     jogoEstaEmAndamento = false;
+
+                    Console.Write("\nPressione ENTER para continuar..");
+                    Console.ReadLine();
+
+
+                    continue;
                 }
 
-                Console.WriteLine("Pressione ENTER para continuar..");
+                Console.Write("\nPressione ENTER para continuar..");
                 Console.ReadLine();
 
 
+                // Rodada computador
+                Console.Clear();
+                Console.WriteLine("----------------------------------");
+                Console.WriteLine("Rodada do Computador!");
+                Console.WriteLine("----------------------------------");
+
+                int resultadoComputador = RandomNumberGenerator.GetInt32(1, 7);
+
+
+                Console.WriteLine("----------------------------------");
+                Console.WriteLine($"O numero sorteado foi: {resultadoComputador}");
+               
+
+                posicaoComputador += resultadoComputador;
+
+                Console.WriteLine($"Voce esta na posicao: {posicaoComputador} de {limiteLinhaChegada}");
+
+                if (posicaoComputador == 5 || posicaoComputador == 10 || posicaoComputador == 15 || posicaoComputador == 25)
+
+                {
+                    Console.WriteLine($"\nEVENTO: Avanço de {bonusAvancoExtra} de {limiteLinhaChegada}");
+                    posicaoComputador += bonusAvancoExtra;
+
+                    Console.WriteLine($"\nVoce esta na posicao: {posicaoComputador} de {limiteLinhaChegada}");
+                }
+
+                else if (posicaoComputador == 7 || posicaoComputador == 13 || posicaoComputador == 20)
+                {
+                    Console.WriteLine($"\nEVENTO: Recuo de {penalidadeRecuo} de {limiteLinhaChegada}");
+                    posicaoComputador -= penalidadeRecuo;
+
+                    Console.WriteLine($"\nVoce esta na posicao: {posicaoComputador} de {limiteLinhaChegada}");
+                }
+
+
+
+                if (posicaoComputador >= limiteLinhaChegada)
+                {
+                    Console.WriteLine("\nParabens! Voce alcançou a linha de chegada.");
+
+                    jogoEstaEmAndamento = false;
+
+
+                }
+
+
+
+                Console.Write("\nPressione ENTER para continuar..");
+                Console.ReadLine();
             }
 
             Console.WriteLine("Deseja continuar? (s/n): ");
