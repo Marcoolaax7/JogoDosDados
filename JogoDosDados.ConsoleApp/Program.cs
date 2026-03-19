@@ -13,6 +13,8 @@ class Program
 
 
         const int limiteLinhaChegada = 30;
+        const int bonusAvancoExtra = 3;
+        const int penalidadeRecuo = 2;
 
         while (true)
         {
@@ -42,18 +44,36 @@ class Program
 
                 posicaoJogador += resultado;
 
-                if (posicaoJogador < limiteLinhaChegada)
-                    Console.WriteLine($"Voce esta na posicao: {posicaoJogador} de {limiteLinhaChegada}");
+                Console.WriteLine($"Voce esta na posicao: {posicaoJogador} de {limiteLinhaChegada}");
 
 
-                else
+                if (posicaoJogador == 5 || posicaoJogador == 10 || posicaoJogador == 15 || posicaoJogador == 25)
+
                 {
-                    Console.WriteLine("Parabens! Voce alcançou a linha de chegada.");
+                    Console.WriteLine($"\nEVENTO: Avanço de {bonusAvancoExtra} de {limiteLinhaChegada}");
+                    posicaoJogador += bonusAvancoExtra;
+
+                    Console.WriteLine($"\nVoce esta na posicao: {posicaoJogador} de {limiteLinhaChegada}");
+                }
+
+                else if (posicaoJogador == 7 || posicaoJogador == 13 || posicaoJogador == 20)
+                {
+                    Console.WriteLine($"\nEVENTO: Recuo de {penalidadeRecuo} de {limiteLinhaChegada}");
+                    posicaoJogador -= penalidadeRecuo;
+
+                    Console.WriteLine($"\nVoce esta na posicao: {posicaoJogador} de {limiteLinhaChegada}");
+                }
+
+
+
+              if( posicaoJogador >= limiteLinhaChegada)
+                {
+                    Console.WriteLine("\nParabens! Voce alcançou a linha de chegada.");
 
                     jogoEstaEmAndamento = false;
                 }
 
-                    Console.WriteLine("Pressione ENTER para continuar..");
+                Console.WriteLine("Pressione ENTER para continuar..");
                 Console.ReadLine();
 
 
