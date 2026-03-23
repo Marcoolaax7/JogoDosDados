@@ -2,10 +2,29 @@
 
 namespace JogoDosDados.ConsoleApp;
 /*
+1. Pista:
+    ○ A pista é representada por uma linha numérica (ex.: de 0 a 30).
+    ○ O jogador e o computador começam na posição 0.
+2. Turnos:
+    ○ O jogador e o computador alternam turnos para rolar um dado (gerar um número aleatório
+    entre 1 e 6).
+    ○ O número gerado é somado à posição atual do competidor.
+    ○ O jogo exibe a posição atual do jogador e do computador após cada rodada.
+3. Eventos Especiais:
+    ○ Para tornar o jogo mais interessante, algumas posições na pista podem ter eventos especiais:
+    ■ Avanço extra: Se o competidor parar em uma posição específica (ex.: 5, 10, 15), ele
+    avança +3 casas.
+    ■ Recuo: Se o competidor parar em outra posição específica (ex.: 7, 13, 20), ele recua -2
+    casas.
+    ■ Rodada extra: Se o competidor tirar 6 no dado, ele ganha uma rodada extra.
 
+4. Condição de Vitória:
+    ○ O primeiro competidor a alcançar ou ultrapassar a posição final (ex.: 30) vence o jogo.
+
+v2
+    1. Refatoração estruturada com extração de métodos
 */
 
-class Program
 {
     static void ExibirCabecalho()
     {
@@ -17,74 +36,7 @@ class Program
 
     }
 
-    static int ExecutarTurnoJogador(int posicaoJogador, int limiteLinhaChegada, int bonusAvancoExtra, int penalidadeRecuo)
-    {
-        do
-        {
-            ExibirCabecalho();
-
-            Console.WriteLine("Rodada do Jogador!");
-            Console.WriteLine("----------------------------------");
-
-
-            Console.Write("Pressione ENTER para lancar um dado...");
-            Console.ReadLine();
-
-            int resultadoJogador = RandomNumberGenerator.GetInt32(1, 7);
-
-            Console.WriteLine("----------------------------------");
-            Console.WriteLine($"O numero sorteado foi: {resultadoJogador}");
-
-            posicaoJogador += resultadoJogador;
-
-            Console.WriteLine($"Voce esta na posicao: {posicaoJogador} de {limiteLinhaChegada}");
-
-            if (posicaoJogador == 5 || posicaoJogador == 10 || posicaoJogador == 15 || posicaoJogador == 25)
-
-            {
-                Console.WriteLine($"\nEVENTO: Avanço de {bonusAvancoExtra} de {limiteLinhaChegada}");
-                posicaoJogador += bonusAvancoExtra;
-
-                Console.WriteLine($"\nVoce esta na posicao: {posicaoJogador} de {limiteLinhaChegada}");
-            }
-
-            else if (posicaoJogador == 7 || posicaoJogador == 13 || posicaoJogador == 20)
-            {
-                Console.WriteLine($"\nEVENTO: Recuo de {penalidadeRecuo} de {limiteLinhaChegada}");
-                posicaoJogador -= penalidadeRecuo;
-
-                Console.WriteLine($"\nVoce esta na posicao: {posicaoJogador} de {limiteLinhaChegada}");
-            }
-
-            if (posicaoJogador >= limiteLinhaChegada)
-            {
-                Console.WriteLine("\nParabens! Voce alcançou a linha de chegada.");
-                Console.Write("\nPressione ENTER para continuar..");
-                Console.ReadLine();
-
-                break;
-            }
-
-            if (resultadoJogador == 6)
-            {
-                Console.WriteLine($"\nEVENTO: Rodada extra!");
-                Console.Write("\nPressione ENTER para jogar novamente...");
-                Console.ReadLine();
-                continue;
-            }
-            else
-            {
-                Console.Write("\nPressione ENTER para continuar..");
-                Console.ReadLine();
-                break;
-            }
-
-        } while (true);
-
-        return posicaoJogador;
-    }
-
-    static int ExecutarTurnoComputador(int posicaoComputador, int limiteLinhaChegada, int bonusAvancoExtra, int penalidadeRecuo)
+    public static int ExecutarTurnoComputador(int posicaoComputador, int limiteLinhaChegada, int bonusAvancoExtra, int penalidadeRecuo)
     {
         do
         {
@@ -152,6 +104,13 @@ class Program
         return posicaoComputador;
     }
 
+
+}
+
+class Program
+{
+
+
     static bool DesejaContinuar()
     {
         Console.WriteLine("Deseja continuar? (s/n): ");
@@ -178,7 +137,7 @@ class Program
 
             while (true)
             {
-                posicaoJogador = ExecutarTurnoJogador(
+                posicaoJogador = Jogador.ExecutarTurnoJogador(
                     posicaoJogador,
                     limiteLinhaChegada,
                     bonusAvancoExtra,
@@ -188,7 +147,7 @@ class Program
                 if (posicaoJogador >= limiteLinhaChegada)
                     break;
 
-                posicaoComputador = ExecutarTurnoComputador(
+                posicaoComputador = Computador.ExecutarTurnoComputador(
                     posicaoComputador,
                     limiteLinhaChegada,
                     bonusAvancoExtra,
