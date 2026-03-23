@@ -3,11 +3,14 @@
 using System.Security.Cryptography;
 
 namespace JogoDosDados.ConsoleApp;
+
 static class Computador
 {
-  
-
-    public static int ExecutarTurnoComputador(int posicaoComputador, int limiteLinhaChegada, int bonusAvancoExtra, int penalidadeRecuo)
+    public static int posicao = 0;
+    private const int limiteLinhaChegada = 30;
+    private const int bonusAvancoExtra = 3;
+    private const int penalidadeRecuo = 2;
+    public static void ExecutarTurnoComputador()
     {
         do
         {
@@ -24,30 +27,30 @@ static class Computador
             Console.WriteLine($"O numero sorteado foi: {resultadoComputador}");
 
 
-            posicaoComputador += resultadoComputador;
+            posicao += resultadoComputador;
 
-            Console.WriteLine($"Voce esta na posicao: {posicaoComputador} de {limiteLinhaChegada}");
+            Console.WriteLine($"Voce esta na posicao: {posicao} de {limiteLinhaChegada}");
 
-            if (posicaoComputador == 5 || posicaoComputador == 10 || posicaoComputador == 15 || posicaoComputador == 25)
+            if (posicao == 5 || posicao == 10 || posicao == 15 || posicao == 25)
 
             {
                 Console.WriteLine($"\nEVENTO: Avanço de {bonusAvancoExtra} de {limiteLinhaChegada}");
-                posicaoComputador += bonusAvancoExtra;
+                posicao += bonusAvancoExtra;
 
-                Console.WriteLine($"\nVoce esta na posicao: {posicaoComputador} de {limiteLinhaChegada}");
+                Console.WriteLine($"\nVoce esta na posicao: {posicao} de {limiteLinhaChegada}");
             }
 
-            else if (posicaoComputador == 7 || posicaoComputador == 13 || posicaoComputador == 20)
+            else if (posicao == 7 || posicao == 13 || posicao == 20)
             {
                 Console.WriteLine($"\nEVENTO: Recuo de {penalidadeRecuo} de {limiteLinhaChegada}");
-                posicaoComputador -= penalidadeRecuo;
+                posicao -= penalidadeRecuo;
 
-                Console.WriteLine($"\nVoce esta na posicao: {posicaoComputador} de {limiteLinhaChegada}");
+                Console.WriteLine($"\nVoce esta na posicao: {posicao} de {limiteLinhaChegada}");
             }
 
 
 
-            if (posicaoComputador >= limiteLinhaChegada)
+            if (posicao >= limiteLinhaChegada)
             {
                 Console.WriteLine("\n O computador chegou na linha de chegada.");
                 Console.Write("\nPressione ENTER para continuar..");
@@ -71,11 +74,13 @@ static class Computador
             }
 
         } while (true);
-
-        return posicaoComputador;
     }
 
-      private static void ExibirCabecalho()
+public static bool Venceu()
+    {
+        return posicao >= limiteLinhaChegada;
+    }
+    private static void ExibirCabecalho()
     {
 
         Console.Clear();
